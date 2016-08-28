@@ -98,34 +98,51 @@
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
+                    <!--<deploymentType>agent</deploymentType>-->
+                    <!--<uri>http://localhost:9997</uri>-->
+
                     <muleVersion>${mule.version}</muleVersion>
-                    <deploymentType>standalone</deploymentType>
                     <muleHome>${mule.home}</muleHome>
                     <community>true</community>
                 </configuration>
                 <executions>
                     <execution>
-                        <id>post undeploy 1</id>
-                        <phase>post-integration-test</phase>
+                        <id>tests deploy</id>
+                        <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>undeploy</goal>
+                            <goal>deploy</goal>
                         </goals>
-                        <configuration>
-                            <domain>simple-domain</domain>
-                            <application>simple-app-1</application>
-                        </configuration>
                     </execution>
+
                     <execution>
-                        <id>post undeploy 2</id>
+                        <id>tests undeploy</id>
                         <phase>post-integration-test</phase>
                         <goals>
                             <goal>undeploy</goal>
                         </goals>
-                        <configuration>
-                            <domain>simple-domain</domain>
-                            <application>simple-app-2</application>
-                        </configuration>
                     </execution>
+                    <!--<execution>-->
+                        <!--<id>post undeploy 1</id>-->
+                        <!--<phase>post-integration-test</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>undeploy</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<domain>simple-domain</domain>-->
+                            <!--<application>simple-app-1</application>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                    <!--<execution>-->
+                        <!--<id>post undeploy 2</id>-->
+                        <!--<phase>post-integration-test</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>undeploy</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<domain>simple-domain</domain>-->
+                            <!--<application>simple-app-2</application>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                 </executions>
             </plugin>
         </plugins>
