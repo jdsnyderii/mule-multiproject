@@ -21,7 +21,8 @@
                 <extensions>true</extensions>
                 <configuration>
                     <!-- if MULE_HOME variable is configured then the domain will be copy to domains directory of your mule installation -->
-                    <copyToDomainsDirectory>true</copyToDomainsDirectory>
+                    <copyToDomainsDirectory>false</copyToDomainsDirectory>
+                    <appName>${project.artifactId}</appName>
                 </configuration>
             </plugin>
         </plugins>

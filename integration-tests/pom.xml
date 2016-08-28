@@ -19,20 +19,11 @@
         <mule.tools.version>1.1</mule.tools.version>
         <jdk.version>1.8</jdk.version>
         <junit.version>4.12</junit.version>
-        <mule.home>c:/users/jsnyder/dev/mule-standalone-3.8.1</mule.home>
+        <test.mule.home>${project.build.directory}/mule-standalone-${mule.version}</test.mule.home>
     </properties>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.mule.tools.maven</groupId>
-                <artifactId>mule-app-maven-plugin</artifactId>
-                <version>${mule.tools.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <copyToAppsDirectory>false</copyToAppsDirectory>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -48,6 +39,20 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-test-sources</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.basedir}/src/it/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -67,7 +72,7 @@
                                     <version>${domainVersion}</version>
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${mule.home}/domains</outputDirectory>
+                                    <outputDirectory>${test.mule.home}/domains</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>${domainGroupId}</groupId>
@@ -75,7 +80,7 @@
                                     <version>${domainVersion}</version>
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${mule.home}/apps</outputDirectory>
+                                    <outputDirectory>${test.mule.home}/apps</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>${domainGroupId}</groupId>
@@ -83,7 +88,7 @@
                                     <version>${domainVersion}</version>
                                     <type>zip</type>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${mule.home}/apps</outputDirectory>
+                                    <outputDirectory>${test.mule.home}/apps</outputDirectory>
                                 </artifactItem>
                             </artifactItems>
                             <stripVersion>true</stripVersion>
@@ -94,55 +99,65 @@
             </plugin>
             <plugin>
                 <groupId>org.mule.tools.maven</groupId>
+                <artifactId>mule-app-maven-plugin</artifactId>
+                <version>${mule.tools.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <copyToAppsDirectory>false</copyToAppsDirectory>
+                    <appName>${project.artifactId}</appName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <testSourceDirectory>${project.basedir}/src/it/java</testSourceDirectory>
+                    <test>**/*ITestCase.java</test>
+                    <systemPropertyVariables>
+                        <buildDirectory>${project.build.directory}</buildDirectory>
+                        <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+                    </systemPropertyVariables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.mule.tools.maven</groupId>
                 <artifactId>mule-maven-plugin</artifactId>
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <!--<deploymentType>agent</deploymentType>-->
-                    <!--<uri>http://localhost:9997</uri>-->
-
                     <muleVersion>${mule.version}</muleVersion>
-                    <muleHome>${mule.home}</muleHome>
+                    <deploymentType>standalone</deploymentType>
                     <community>true</community>
+                    <arguments>
+                        <argument>-M-Djava.io.tmpdir=${project.build.directory}</argument>
+                        <argument>-M-Dlog4j.skipJansi=true</argument>
+                    </arguments>
                 </configuration>
                 <executions>
                     <execution>
-                        <id>tests deploy</id>
+                        <id>deploy</id>
                         <phase>pre-integration-test</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>
                     </execution>
-
                     <execution>
-                        <id>tests undeploy</id>
+                        <id>undeploy</id>
                         <phase>post-integration-test</phase>
                         <goals>
                             <goal>undeploy</goal>
                         </goals>
                     </execution>
-                    <!--<execution>-->
-                        <!--<id>post undeploy 1</id>-->
-                        <!--<phase>post-integration-test</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>undeploy</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<domain>simple-domain</domain>-->
-                            <!--<application>simple-app-1</application>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>post undeploy 2</id>-->
-                        <!--<phase>post-integration-test</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>undeploy</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<domain>simple-domain</domain>-->
-                            <!--<application>simple-app-2</application>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
                 </executions>
             </plugin>
         </plugins>

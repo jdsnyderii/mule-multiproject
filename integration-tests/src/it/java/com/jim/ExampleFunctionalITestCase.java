@@ -14,7 +14,7 @@ import org.mule.api.client.MuleClient;
 import org.mule.transport.NullPayload;
 import org.mule.tck.junit4.FunctionalTestCase;
 
-public class ExampleFunctionalTestCase extends FunctionalTestCase
+public class ExampleFunctionalITestCase extends FunctionalTestCase
 {
     private static final int RECEIVE_TIMEOUT = 5000;
 

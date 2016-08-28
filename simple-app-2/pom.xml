@@ -21,6 +21,10 @@
             <plugin>
                 <groupId>org.mule.tools.maven</groupId>
                 <artifactId>mule-app-maven-plugin</artifactId>
+                <configuration>
+                    <appName>${project.artifactId}</appName>
+                    <copyToAppsDirectory>false</copyToAppsDirectory>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
