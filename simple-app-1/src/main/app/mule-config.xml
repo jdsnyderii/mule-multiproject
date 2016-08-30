@@ -16,7 +16,6 @@
       http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
         ">
 
-    <db:generic-config doc:name="Generic Database Configuration" driverClassName="com.mysql.jdbc.Driver" name="MySQL_Configuration" url="${jdbc.url}"/>
     <db:generic-config name="db_config" dataSource-ref="jdbcDataSource"/>
     <flow name="main">
         <vm:inbound-endpoint path="in"/>
