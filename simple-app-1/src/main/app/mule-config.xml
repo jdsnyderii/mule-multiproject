@@ -27,7 +27,6 @@
 		http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd
 	">
 
-
     <flow name="main">
        <vm:inbound-endpoint path="in" />
 
