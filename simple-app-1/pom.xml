@@ -56,12 +56,23 @@
 
     <!-- Mule Dependencies -->
     <dependencies>
+        <dependency>
+            <groupId>com.jim</groupId>
+            <artifactId>simple-domain</artifactId>
+            <version>${project.version}</version>
+            <type>zip</type>
+        </dependency>
         <!-- Xml configuration -->
         <dependency>
             <groupId>org.mule.modules</groupId>
             <artifactId>mule-module-spring-config</artifactId>
             <version>${mule.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.1.6.RELEASE</version>
         </dependency>
         <!-- Mule Transports -->
         <dependency>
@@ -72,25 +83,7 @@
         </dependency>
         <dependency>
             <groupId>org.mule.transports</groupId>
-            <artifactId>mule-transport-jms</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mule.transports</groupId>
             <artifactId>mule-transport-vm</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mule.transports</groupId>
-            <artifactId>mule-transport-file</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mule.transports</groupId>
-            <artifactId>mule-transport-ftp</artifactId>
             <version>${mule.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -109,19 +102,7 @@
         </dependency>
         <dependency>
             <groupId>org.mule.modules</groupId>
-            <artifactId>mule-module-jersey</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mule.modules</groupId>
             <artifactId>mule-module-json</artifactId>
-            <version>${mule.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mule.modules</groupId>
-            <artifactId>mule-module-ws</artifactId>
             <version>${mule.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -141,10 +122,10 @@
             <artifactId>munit-runner</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.jim</groupId>
-            <artifactId>simple-domain</artifactId>
-            <version>${project.version}</version>
-            <type>zip</type>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.3.176</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

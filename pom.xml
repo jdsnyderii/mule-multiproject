@@ -121,6 +121,7 @@
                             <!-- this is a bug in munit where mule.home is ignored -->
                             <!-- so we are stuck in 1.2.1 and earlier of munit -->
                             <mule.home>${project.build.directory}${file.separator}.mule</mule.home>
+                            <deployment-env>test</deployment-env>
                         </systemPropertyVariables>
                         <coverage>
                             <runCoverage>false</runCoverage>
