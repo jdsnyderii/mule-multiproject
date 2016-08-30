@@ -5,6 +5,14 @@
     <groupId>com.jim</groupId>
     <artifactId>basic-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.mule.tests</groupId>
+            <artifactId>mule-tests-functional</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <packaging>pom</packaging>
     <name>basic-parent</name>
     <url>http://maven.apache.org</url>

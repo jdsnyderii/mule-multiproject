@@ -120,6 +120,21 @@
             <version>${mule.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.mulesoft.munit</groupId>
+            <artifactId>mule-munit-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mulesoft.munit</groupId>
+            <artifactId>munit-runner</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jim</groupId>
+            <artifactId>simple-domain</artifactId>
+            <version>${project.version}</version>
+            <type>zip</type>
+        </dependency>
+
     </dependencies>
 
 </project>
