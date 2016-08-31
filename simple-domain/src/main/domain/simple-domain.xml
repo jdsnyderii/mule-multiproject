@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain:mule-domain
         xmlns="http://www.mulesoft.org/schema/mule/core"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:domain="http://www.mulesoft.org/schema/mule/domain"
         xmlns:http="http://www.mulesoft.org/schema/mule/http"
         xmlns:db="http://www.mulesoft.org/schema/mule/db"
         xmlns:spring="http://www.springframework.org/schema/beans"
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="
 		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
         http://www.mulesoft.org/schema/mule/domain http://www.mulesoft.org/schema/mule/domain/current/mule-domain.xsd
         http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-"
-        version="EE-3.8.1"
->
+        http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+">
     <!-- configure here resources to be shared within the domain -->
     <context:property-placeholder file-encoding="UTF-8" location="${deployment-env}.db.properties" system-properties-mode="ENVIRONMENT"/>
 
@@ -28,4 +27,7 @@
             <spring:property name="password" value="${db.password}"/>
         </spring:bean>
     </spring:beans>
+
+    <db:generic-config name="db_config" dataSource-ref="jdbcDataSource" doc:name="db config"/>
+
 </domain:mule-domain>

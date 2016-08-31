@@ -13,10 +13,13 @@ import org.mule.api.MuleMessage;
 import org.mule.api.client.MuleClient;
 import org.mule.transport.NullPayload;
 import org.mule.tck.junit4.FunctionalTestCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ExampleFunctionalITestCase extends FunctionalTestCase
 {
     private static final int RECEIVE_TIMEOUT = 5000;
+    private static Logger logger = LoggerFactory.getLogger(ExampleFunctionalITestCase.class);
 
     @Override
     protected String getConfigFile()
@@ -36,6 +39,8 @@ public class ExampleFunctionalITestCase extends FunctionalTestCase
         assertFalse(result.getPayload() instanceof NullPayload);
 
         //TODO Assert the correct data has been received
-        assertEquals("some data Received", result.getPayloadAsString());
+        final String payloadAsString = result.getPayloadAsString();
+        assertEquals("some data Received", payloadAsString);
+        logger.info("got some data {}", payloadAsString);
     }
 }

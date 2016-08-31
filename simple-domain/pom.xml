@@ -17,17 +17,32 @@
             <plugin>
                 <groupId>org.mule.tools.maven</groupId>
                 <artifactId>mule-domain-maven-plugin</artifactId>
-                <version>1.1</version>
+                <version>1.2</version>
                 <extensions>true</extensions>
                 <configuration>
                     <!-- if MULE_HOME variable is configured then the domain will be copy to domains directory of your mule installation -->
-                    <copyToDomainsDirectory>false</copyToDomainsDirectory>
-                    <appName>${project.artifactId}</appName>
+                    <copyToDomainsDirectory>true</copyToDomainsDirectory>
+                    <finalName>${project.artifactId}</finalName>
+                    <nonFilteredFileExtensions>
+                        <filteredFileExtension>*.properties</filteredFileExtension>
+                    </nonFilteredFileExtensions>
                 </configuration>
             </plugin>
         </plugins>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.1.6.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+            </exclusions>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

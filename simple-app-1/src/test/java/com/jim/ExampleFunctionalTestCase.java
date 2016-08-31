@@ -7,27 +7,28 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
 import org.junit.Test;
 import org.mule.DefaultMuleMessage;
 import org.mule.api.MuleMessage;
 import org.mule.api.client.MuleClient;
 import org.mule.transport.NullPayload;
 import org.mule.tck.junit4.FunctionalTestCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class ExampleFunctionalTestCase extends FunctionalTestCase
-{
+public class ExampleFunctionalTestCase extends FunctionalTestCase {
     private static final int RECEIVE_TIMEOUT = 5000;
+    private static Logger logger = LoggerFactory.getLogger(ExampleFunctionalTestCase.class);
 
     @Override
-    protected String getConfigFile()
-    {
-        return "mule-config.xml";
+    protected String getConfigFile() {
+        return "app-1-mule-config.xml";
     }
 
     @Test
-    public void testConfiguration() throws Exception
-    {
-    	MuleClient client = muleContext.getClient();
+    public void testConfiguration() throws Exception {
+        MuleClient client = muleContext.getClient();
         MuleMessage message = new DefaultMuleMessage("some data", muleContext);
         client.dispatch("vm://in", message);
         MuleMessage result = client.request("vm://out", RECEIVE_TIMEOUT);
@@ -37,5 +38,6 @@ public class ExampleFunctionalTestCase extends FunctionalTestCase
 
         //TODO Assert the correct data has been received
         assertEquals("some data Received", result.getPayloadAsString());
+        logger.info("got data {}", result.getPayloadAsString());
     }
 }

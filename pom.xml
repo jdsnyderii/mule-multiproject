@@ -9,10 +9,10 @@
         <dependency>
             <groupId>org.mule.tests</groupId>
             <artifactId>mule-tests-functional</artifactId>
-            <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <packaging>pom</packaging>
     <name>basic-parent</name>
     <url>http://maven.apache.org</url>
@@ -60,6 +60,27 @@
                 <version>${munit.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.12</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.12</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>1.7.12</version>
+            </dependency>
+                <dependency>
+                    <groupId>org.mule.tests</groupId>
+                    <artifactId>mule-tests-functional</artifactId>
+                    <version>RELEASE</version>
+                    <scope>test</scope>
+                </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -92,6 +113,7 @@
                         <systemPropertyVariables>
                             <buildDirectory>${project.build.directory}</buildDirectory>
                             <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+                            <deployment-env>test</deployment-env>
                         </systemPropertyVariables>
                     </configuration>
                 </plugin>
@@ -116,6 +138,7 @@
                     <groupId>com.mulesoft.munit.tools</groupId>
                     <artifactId>munit-maven-plugin</artifactId>
                     <version>${munit.version}</version>
+                    <extensions>true</extensions>
                     <configuration>
                         <systemPropertyVariables>
                             <!-- this is a bug in munit where mule.home is ignored -->
@@ -134,27 +157,6 @@
                             <goals>
                                 <goal>test</goal>
                             </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.7</version>
-                    <executions>
-                        <execution>
-                            <id>add-resource</id>
-                            <phase>generate-resources</phase>
-                            <goals>
-                                <goal>add-resource</goal>
-                            </goals>
-                            <configuration>
-                                <resources>
-                                    <resource>
-                                        <directory>src/main/app/</directory>
-                                    </resource>
-                                </resources>
-                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
