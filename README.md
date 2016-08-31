@@ -11,8 +11,10 @@ directory where the mule runtime is then extracted.
 If this is using Windows, your cmd shell (or IDE) needs to run as admin and you need to have a 32-bit JDK available
 because of the java service wrapper licensing issues for community edition. You can run this like:
 
-    % mvn clean package
-    % cd integration-tests
-    % mvn clean verify
+```
+% mvn clean install
+% cd integration-tests
+% mvn clean verify
+```
 
 This should start a Mule ESB instance and execute the tests in integration.
