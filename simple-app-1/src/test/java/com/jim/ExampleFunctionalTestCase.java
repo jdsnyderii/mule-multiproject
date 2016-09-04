@@ -17,6 +17,8 @@ import org.mule.tck.junit4.FunctionalTestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+
 public class ExampleFunctionalTestCase extends FunctionalTestCase {
     private static final int RECEIVE_TIMEOUT = 5000;
     private static Logger logger = LoggerFactory.getLogger(ExampleFunctionalTestCase.class);
@@ -29,7 +31,10 @@ public class ExampleFunctionalTestCase extends FunctionalTestCase {
     @Test
     public void testConfiguration() throws Exception {
         MuleClient client = muleContext.getClient();
-        MuleMessage message = new DefaultMuleMessage("some data", muleContext);
+        HashMap<String, String> props = new HashMap<>();
+        props.put("action", "stop");
+
+        MuleMessage message = new DefaultMuleMessage(props, muleContext);
         client.dispatch("vm://in", message);
         MuleMessage result = client.request("vm://out", RECEIVE_TIMEOUT);
         assertNotNull(result);
@@ -37,7 +42,7 @@ public class ExampleFunctionalTestCase extends FunctionalTestCase {
         assertFalse(result.getPayload() instanceof NullPayload);
 
         //TODO Assert the correct data has been received
-        assertEquals("some data Received", result.getPayloadAsString());
+        assertEquals("Stopped flow(s): stoppable-flow Received", result.getPayloadAsString());
         logger.info("got data {}", result.getPayloadAsString());
     }
 }

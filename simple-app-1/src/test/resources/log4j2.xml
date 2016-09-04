@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p %d [%t] %c: %m%n"/>
+        </Console>
+        <!--
+            This file Appender assumes that the working directory for test output has been specified as needed. For example,
+            the test output directory might be target in which case the file will be found in target/logs/test.log
+        -->
+        <File name="test-logging" fileName="${sys:buildDirectory}/logs/test.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+
+    <!-- You can set custom log levels per-package here -->
+    <Loggers>
+
+        <!-- CXF is used heavily by Mule for web services -->
+        <Logger name="org.apache.cxf" level="warn"/>
+
+        <!-- Apache Commons tend to make a lot of noise which can clutter the log. -->
+        <Logger name="org.apache" level="warn"/>
+
+        <!-- Reduce startup noise -->
+        <Logger name="org.springframework.beans.factory" level="warn"/>
+
+        <!-- Mule classes -->
+        <Logger name="org.mule" level="info"/>
+        <Logger name="com.mulesoft" level="info"/>
+
+        <!-- Reduce DM verbosity -->
+        <Logger name="org.jetel" level="warn"/>
+        <Logger name="Tracking" level="warn"/>
+
+        <Root level="info">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="test-logging"/>
+        </Root>
+    </Loggers>
+</Configuration>

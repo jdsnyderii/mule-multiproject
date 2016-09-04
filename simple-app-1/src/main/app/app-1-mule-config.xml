@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule version="EE-3.8.0"
+<mule version="EE-3.8.1"
       xmlns="http://www.mulesoft.org/schema/mule/core"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:domain="http://www.mulesoft.org/schema/mule/domain"
-      xmlns:db="http://www.mulesoft.org/schema/mule/db"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
       xmlns:spring="http://www.springframework.org/schema/beans"
       xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
       xsi:schemaLocation="
       http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-      http://www.mulesoft.org/schema/mule/domain http://www.mulesoft.org/schema/mule/core/current/mule-domain.xsd
       http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
-      http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
       http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-      http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
-" >
+">
 
     <spring:beans>
         <spring:import resource="classpath:simple-domain.xml"/>
     </spring:beans>
 
+    <flow name="stoppable-flow">
+        <annotations>
+            <!-- mark this flow so it can get managed -->
+            <stoppable>true</stoppable>
+        </annotations>
+        <vm:inbound-endpoint path="empty_in"/>
+        <vm:outbound-endpoint path="empty_out"/>
+    </flow>
+
     <flow name="main">
         <vm:inbound-endpoint path="in"/>
-
-        <!-- TODO add your service component here. This can also be a Spring bean using <spring-object bean="name"/> -->
+        <component class="com.jim.StopStartFlowsUtil"/>
         <append-string-transformer message=" Received"/>
-
+        <!-- TODO add your service component here. This can also be a Spring bean using <spring-object bean="name"/> -->
         <vm:outbound-endpoint path="out"/>
     </flow>
+
 </mule>

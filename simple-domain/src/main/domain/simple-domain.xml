@@ -15,7 +15,8 @@
         http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
 ">
     <!-- configure here resources to be shared within the domain -->
-    <context:property-placeholder file-encoding="UTF-8" location="${deployment-env}.db.properties" system-properties-mode="ENVIRONMENT"/>
+    <context:property-placeholder file-encoding="UTF-8" location="${deployment-env}.db.properties"
+                                  system-properties-mode="ENVIRONMENT"/>
 
     <http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8081"
                           doc:name="HTTP Listener Configuration"/>
@@ -28,6 +29,9 @@
         </spring:bean>
     </spring:beans>
 
-    <db:generic-config name="db_config" dataSource-ref="jdbcDataSource" doc:name="db config"/>
+    <db:generic-config name="db_config" dataSource-ref="jdbcDataSource" doc:name="db config">
+        <db:pooling-profile maxPoolSize="10" minPoolSize="3">
+        </db:pooling-profile>
+    </db:generic-config>
 
 </domain:mule-domain>

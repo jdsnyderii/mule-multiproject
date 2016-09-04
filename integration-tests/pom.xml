@@ -15,7 +15,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <mule.version>3.8.1</mule.version>
+        <mule.version>3.8.0</mule.version>
         <mule.tools.version>1.1</mule.tools.version>
         <jdk.version>1.8</jdk.version>
         <junit.version>4.12</junit.version>
@@ -23,6 +23,11 @@
     </properties>
 
     <build>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/src/it/resources</directory>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -39,6 +44,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.12</version>
                 <executions>
                     <execution>
                         <id>add-test-sources</id>
@@ -110,13 +116,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.19.1</version>
                 <configuration>
                     <testSourceDirectory>${project.basedir}/src/it/java</testSourceDirectory>
                     <test>**/*ITestCase.java</test>
                     <systemPropertyVariables>
                         <buildDirectory>${project.build.directory}</buildDirectory>
                         <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+                        <deployment-env>test</deployment-env>
+                        <loggingPath>${project.build.directory}</loggingPath>
                     </systemPropertyVariables>
                 </configuration>
                 <executions>
@@ -141,6 +148,8 @@
                     <arguments>
                         <argument>-M-Djava.io.tmpdir=${project.build.directory}</argument>
                         <argument>-M-Dlog4j.skipJansi=true</argument>
+                        <argument>-M-Ddeployment-env=test</argument>
+                        <argument>-M-DloggingPath=${project.build.directory}/log</argument>
                     </arguments>
                 </configuration>
                 <executions>
@@ -165,6 +174,33 @@
 
     <!-- Mule Dependencies -->
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>3.3.0</version>
+            <scope>test</scope>
+        </dependency>
         <!-- Xml configuration -->
         <dependency>
             <groupId>org.mule.modules</groupId>

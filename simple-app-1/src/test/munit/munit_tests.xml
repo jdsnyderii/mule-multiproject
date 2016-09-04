@@ -16,6 +16,6 @@
     </spring:beans>
 
     <munit:test name="test1" description="run the main flow" ignore="false">
-        <flow-ref name="main" doc:name="Flow-ref to main"/>
+        <flow-ref name="main" doc:name="main"/>
     </munit:test>
 </mule>
